@@ -358,6 +358,25 @@ require('lazy').setup({
             require('telescope.themes').get_dropdown(),
           },
         },
+        defaults = {
+          file_ignore_patterns = { '.git', 'node_modules' },
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',
+            '--glob=!.git/',
+          },
+          pickers = {
+            find_files = {
+              find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+            },
+          },
+        },
       }
 
       -- Enable Telescope extensions if they are installed
@@ -376,6 +395,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>so', builtin.lsp_document_symbols, { desc = '[S]earch symbols' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -621,6 +641,7 @@ require('lazy').setup({
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+          lsp_format = "fallback",
         }
       end,
       formatters_by_ft = {
@@ -631,6 +652,9 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { "prettierd", "prettier" } },
+        javascriptreact = { { "prettierd", "prettier" } },
+        typecript = { { 'prettierd', 'prettier' } },
       },
     },
   },
