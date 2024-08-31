@@ -276,18 +276,20 @@ require('lazy').setup({
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
-
-      -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-      }
-    end,
+    opts = {
+      spec = {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>c_', hidden = true },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>d_', hidden = true },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>r_', hidden = true },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>s_', hidden = true },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>w_', hidden = true },
+      },
+    },
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -373,7 +375,7 @@ require('lazy').setup({
           },
           pickers = {
             find_files = {
-              find_command = { "fd", "--type", "f", "--strip-cwd-prefix" },
+              find_command = { 'fd', '--type', 'f', '--strip-cwd-prefix' },
             },
           },
         },
@@ -641,7 +643,7 @@ require('lazy').setup({
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-          lsp_format = "fallback",
+          lsp_format = 'fallback',
         }
       end,
       formatters_by_ft = {
@@ -652,8 +654,8 @@ require('lazy').setup({
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { { 'prettierd', 'prettier' } },
-        typescriptreact = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
         typecript = { { 'prettierd', 'prettier' } },
       },
     },
