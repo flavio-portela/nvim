@@ -15,6 +15,11 @@ return {
     'leoluz/nvim-dap-go',
     'mfussenegger/nvim-dap-python',
   },
+  opts = {
+    spec = {
+      {'<leader>t', group = '[T]est and debug'}
+    }
+  },
   config = function()
     local dap, dapui = require 'dap', require 'dapui'
     dapui.setup()
@@ -51,10 +56,12 @@ return {
     end
 
     -- Basic debugging keymaps, feel free to change to your liking!
+    vim.keymap.set('n', '<leader>tra', dap.clear_breakpoints, { desc = 'Debug: Remove All Breakpoints' })
     vim.keymap.set('n', '<leader>ts', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
     vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
     vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+    vim.keymap.set('n', '<F5>', dap.stop, { desc = 'Debug: Stop' })
     vim.keymap.set('n', '<leader>tt', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
     vim.keymap.set('n', '<leader>tc', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
